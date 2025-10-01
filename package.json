@@ -1,5 +1,5 @@
 {
-  "name": "persogenius.de",
+  "name": "persogenius",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write .",
-    "test": "jest"
+    "test": "jest",
+    "deploy": "wrangler pages deploy out"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
@@ -43,6 +44,7 @@
     "tailwindcss": "^4",
     "ts-jest": "^29.4.1",
     "tw-animate-css": "^1.3.6",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.40.3"
   }
 }
