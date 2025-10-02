@@ -39,7 +39,7 @@ import { IdInfoSchema } from "@/utils/schemas";
 import { formatMachineReadableZone } from "@/utils/strings";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Dices, IdCard, Play, RotateCcw } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -48,6 +48,7 @@ export function Persogen() {
 
   const form = useForm<z.infer<typeof IdInfoSchema>>({
     resolver: zodResolver(IdInfoSchema),
+    mode: "onChange",
     defaultValues: {
       authorityId: "LZ63",
       assignedNumber: "11T47",
@@ -57,7 +58,7 @@ export function Persogen() {
     },
   });
 
-  function generateMrz(values: z.infer<typeof IdInfoSchema>) {
+  const generateMrz = useCallback((values: z.infer<typeof IdInfoSchema>) => {
     const year = values.birthdate.getFullYear().toString().slice(2);
     const month = (values.birthdate.getMonth() + 1).toString().padStart(2, "0");
     const day = values.birthdate.getDate().toString().padStart(2, "0");
@@ -94,19 +95,19 @@ export function Persogen() {
     });
     const formattedNewMrz = newMrz.match(/.{1,30}/g)?.join("\n") || "";
     setMrzDisplay(formattedNewMrz);
-  }
+  }, []);
 
   function onReset() {
     form.reset();
   }
 
-  function onRandom() {
+  const onRandom = useCallback(() => {
     form.setValue("authorityId", getRandomAuthorityId());
     form.setValue("assignedNumber", getRandomAssignedNumber());
     form.setValue("birthdate", getRandomBirthDate());
     form.setValue("expiryDate", getRandomExpiryDate());
     form.setValue("versionNumber", getRandomVersionNumber());
-  }
+  }, [form]);
 
   function onSubmit(values: z.infer<typeof IdInfoSchema>) {
     generateMrz(values);
@@ -115,7 +116,7 @@ export function Persogen() {
   useEffect(() => {
     onRandom();
     generateMrz(form.getValues());
-  }, []);
+  }, [form, onRandom, generateMrz]);
 
   return (
     <Card className="w-full max-w-sm justify-self-start">
