@@ -119,7 +119,7 @@ export function Persogen() {
   }, [form, onRandom, generateMrz]);
 
   return (
-    <Card className="w-full max-w-sm justify-self-start">
+    <Card className="w-full">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <IdCard />
@@ -247,7 +247,7 @@ export function Persogen() {
           rows={3}
           cols={30}
           readOnly
-          className="font-mono text-sm resize-none"
+          className="font-mono text-sm resize-none text-center"
           value={mrzDisplay}
         />
       </CardFooter>
