@@ -1,10 +1,12 @@
 # persogenius.de
 
+> [!NOTE]
+> You can access the public instance at [https://www.persogenius.de/](www.persogenius.de/).
+
 _persogenius.de_ is a simple web application designed to generate valid machine-readable zones for German ID cards, compliant with the latest specifications.
 
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Public Instance](#public-instance)
 - [Privacy](#privacy)
 - [References](#references)
 
@@ -42,12 +44,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Usage
 
 Either download this repository and use it locally or visit the public instance.
-
-### Public Instance
-
-| URL                                              | Status |
-|--------------------------------------------------|--------|
-| [www.persogenius.de](https://www.persogenius.de) | ✅      |
 
 ## Privacy
 
