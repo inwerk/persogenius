@@ -1,7 +1,7 @@
 # persogenius.de
 
 > [!NOTE]
-> You can access the public instance at [https://www.persogenius.de/](www.persogenius.de/).
+> You can access the public instance at [https://www.persogenius.de/](https://www.persogenius.de/).
 
 _persogenius.de_ is a simple web application designed to generate valid machine-readable zones for German ID cards, compliant with the latest specifications.
 
