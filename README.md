@@ -1,8 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# persogenius.de
 
-## Getting Started
+_persogenius.de_ is a simple web application designed to generate valid machine-readable zones for German ID cards, compliant with the latest specifications.
 
-First, run the development server:
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Public Instance](#public-instance)
+- [Privacy](#privacy)
+- [References](#references)
+
+## Installation
+
+_persogenius.de_ is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+Clone this repository and navigate to the project directory:
+
+```bash
+git clone https://github.com/inwerk/persogen.git
+cd persogenius
+```
+
+Install the dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
@@ -16,21 +39,20 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Either download this repository and use it locally or visit the public instance.
 
-## Learn More
+### Public Instance
 
-To learn more about Next.js, take a look at the following resources:
+| URL                                              | Status |
+|--------------------------------------------------|--------|
+| [www.persogenius.de](https://www.persogenius.de) | ✅      |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Privacy
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+User inputs remain on the device and are not transmitted to the server.
 
-## Deploy on Vercel
+## References
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Die maschinenlesbare Zone in deutschen Ausweisen und Pässen](https://www.bmi.bund.de/SharedDocs/downloads/DE/veroeffentlichungen/themen/moderne-verwaltung/ausweise/maschinenlesbare-zone-paesse-ausweise.pdf?__blob=publicationFile&v=17) [(archived)](https://web.archive.org/web/20241009144007/https://www.bmi.bund.de/SharedDocs/downloads/DE/veroeffentlichungen/themen/moderne-verwaltung/ausweise/maschinenlesbare-zone-paesse-ausweise.pdf?__blob=publicationFile&v=17)
