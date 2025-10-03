@@ -33,5 +33,7 @@ export const IdInfoSchema = z.object({
     .max(new Date("2099-12-31"), {
       error: "Das Ablaufdatum liegt zu weit in der Zukunft.",
     }),
-  versionNumber: z.enum(["2108", "2405"]),
+  versionNumber: z.enum(["2108", "2405"], {
+    error: "Die Versionsnummer ist erforderlich.",
+  }),
 });

@@ -201,7 +201,11 @@ export function Persogen() {
                 <FormItem>
                   <FormLabel>Versionsnummer</FormLabel>
                   <FormControl>
-                    <Select onValueChange={field.onChange} value={field.value}>
+                    <Select
+                      key={field.value}
+                      onValueChange={field.onChange}
+                      value={field.value || ""}
+                    >
                       <SelectTrigger className="w-full">
                         <SelectValue />
                       </SelectTrigger>
