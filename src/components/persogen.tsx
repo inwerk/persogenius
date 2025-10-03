@@ -119,7 +119,7 @@ export function Persogen() {
   }, [form, onRandom, generateMrz]);
 
   return (
-    <Card className="w-full">
+    <Card className="w-full justify-center max-w-sm">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <IdCard />
