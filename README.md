@@ -1,9 +1,9 @@
-# persogenius.de
+# Persogenius
 
 > [!NOTE]
 > You can access the public instance at [https://www.persogenius.de/](https://www.persogenius.de/).
 
-_persogenius.de_ is a simple web application designed to generate valid machine-readable zones for German ID cards, compliant with the latest specifications.
+Persogenius is a simple web application designed to generate valid machine-readable zones for German ID cards, compliant with the latest specifications.
 
 - [Installation](#installation)
 - [Usage](#usage)
@@ -12,12 +12,12 @@ _persogenius.de_ is a simple web application designed to generate valid machine-
 
 ## Installation
 
-_persogenius.de_ is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Persogenius is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 Clone this repository and navigate to the project directory:
 
 ```bash
-git clone https://github.com/inwerk/persogen.git
+git clone https://github.com/inwerk/persogenius.git
 cd persogenius
 ```
 
