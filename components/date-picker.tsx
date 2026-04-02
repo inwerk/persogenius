@@ -1,9 +1,9 @@
 "use client"
 
 import { format } from "date-fns"
-import { de } from "date-fns/locale"
 import { Calendar as CalendarIcon } from "lucide-react"
 import * as React from "react"
+import { de } from "react-day-picker/locale"
 
 import { buttonVariants } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -21,6 +21,8 @@ type DatePickerProps = {
   id?: string
   name?: string
   disabled?: boolean
+  startMonth?: Date
+  endMonth?: Date
   ariaInvalid?: boolean
 }
 
@@ -31,6 +33,8 @@ export function DatePicker({
   id,
   name,
   disabled,
+  startMonth,
+  endMonth,
   ariaInvalid,
 }: DatePickerProps) {
   const [internalDate, setInternalDate] = React.useState<Date>()
@@ -73,6 +77,8 @@ export function DatePicker({
           selected={date}
           onSelect={handleSelect}
           captionLayout="dropdown"
+          startMonth={startMonth ?? undefined}
+          endMonth={endMonth ?? undefined}
         />
       </PopoverContent>
     </Popover>

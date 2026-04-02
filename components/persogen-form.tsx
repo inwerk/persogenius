@@ -119,6 +119,8 @@ export function PersogenForm() {
                 value={field.value}
                 onChangeAction={field.onChange}
                 onBlurAction={field.onBlur}
+                startMonth={new Date(1900, 0)}
+                endMonth={new Date(new Date().getFullYear(), 11)}
                 ariaInvalid={fieldState.invalid}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
@@ -139,6 +141,8 @@ export function PersogenForm() {
                 value={field.value}
                 onChangeAction={field.onChange}
                 onBlurAction={field.onBlur}
+                startMonth={new Date(2024, 7)}
+                endMonth={new Date(2099, 11)}
                 ariaInvalid={fieldState.invalid}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
