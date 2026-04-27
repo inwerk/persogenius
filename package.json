@@ -17,7 +17,7 @@
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
   },
   "dependencies": {
-    "@base-ui/react": "^1.3.0",
+    "@base-ui/react": "^1.4.1",
     "@hookform/resolvers": "^5.2.2",
     "@opennextjs/cloudflare": "^1.18.0",
     "class-variance-authority": "^0.7.1",
