@@ -31,4 +31,5 @@ jobs:
         with:
           wranglerVersion: "4.87.0"
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          preCommands: npm run build
           command: deploy --env ${{ github.event.inputs.environment || 'staging' }}
