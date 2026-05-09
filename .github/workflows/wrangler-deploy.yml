@@ -1,0 +1,28 @@
+name: Deploy Cloudflare Worker
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to deploy"
+        required: true
+        default: "staging"
+        type: choice
+        options:
+          - staging
+          - production
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy Cloudflare Worker
+    steps:
+      - uses: actions/checkout@v6
+      - name: Deploy using wrangler
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: deploy --env ${{ github.event.inputs.environment || 'staging' }}

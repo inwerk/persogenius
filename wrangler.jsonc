@@ -20,14 +20,21 @@
   "observability": {
     "enabled": true,
   },
-  "routes": [
-    {
-      "pattern": "persogenius.de",
-      "custom_domain": true,
+  "env": {
+    "staging": {
+      "workers_dev": true,
     },
-    {
-      "pattern": "www.persogenius.de",
-      "custom_domain": true,
+    "production": {
+      "routes": [
+        {
+          "pattern": "persogenius.de",
+          "custom_domain": true,
+        },
+        {
+          "pattern": "www.persogenius.de",
+          "custom_domain": true,
+        },
+      ],
     },
-  ],
+  },
 }
