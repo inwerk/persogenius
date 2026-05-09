@@ -21,6 +21,11 @@ jobs:
     name: Deploy ${{ github.event.inputs.environment || 'staging' }} environment
     steps:
       - uses: actions/checkout@v6
+      - name: Install Node.js 25
+        uses: actions/setup-node@v6
+        with:
+          node-version: "25"
+          cache: "npm"
       - name: Deploy using wrangler
         uses: cloudflare/wrangler-action@v3
         with:
