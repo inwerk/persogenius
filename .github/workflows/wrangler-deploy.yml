@@ -30,7 +30,7 @@ jobs:
           node-version: "25"
           cache: "npm"
       - name: Deploy using wrangler
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v4
         with:
           wranglerVersion: "4.87.0"
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
