@@ -62,21 +62,15 @@ export const formSchema = z.object({
       error:
         "Der Nachname darf nur aus Großbuchstaben, Kleinbuchstaben, Umlauten, Eszetts, Leerzeichen oder Bindestrichen bestehen.",
     })
-    .refine((name) => !/^\s|\s$/.test(name), {
-      error:
-        "Der Vorname darf keine führenden oder endenden Leerzeichen enthalten.",
-    })
-    .refine((name) => !/\s{2,}/.test(name), {
-      error: "Der Vorname darf keine doppelten Leerzeichen enthalten.",
-    })
     .refine((name) => !name.split(/\s+/).some((word) => /^\-|\-$/.test(word)), {
       error:
-        "Bindestriche dürfen nicht am Anfang oder Ende eines Wortes stehen.",
+        "Der Nachname darf keine Bindestriche am Anfang oder Ende eines Wortes enthalten.",
     })
     .refine((name) => !/\-{2,}/.test(name), {
-      error: "Der Vorname darf keine mehrfachen Bindestriche enthalten.",
+      error: "Der Nachname darf keine mehrfachen Bindestriche enthalten.",
     })
-    .max(50, { error: "Der Nachname darf maximal 50 Zeichen lang sein." }),
+    .max(50, { error: "Der Nachname darf maximal 50 Zeichen lang sein." })
+    .transform((val) => val.trim().replace(/\s{2,}/g, " ")),
   prename: z
     .string()
     .nonempty({ error: "Der Vorname ist erforderlich." })
@@ -84,21 +78,15 @@ export const formSchema = z.object({
       error:
         "Der Vorname darf nur aus Großbuchstaben, Kleinbuchstaben, Umlauten, Eszetts, Leerzeichen oder Bindestrichen bestehen.",
     })
-    .refine((name) => !/^\s|\s$/.test(name), {
-      error:
-        "Der Vorname darf keine führenden oder endenden Leerzeichen enthalten.",
-    })
-    .refine((name) => !/\s{2,}/.test(name), {
-      error: "Der Vorname darf keine doppelten Leerzeichen enthalten.",
-    })
     .refine((name) => !name.split(/\s+/).some((word) => /^\-|\-$/.test(word)), {
       error:
-        "Bindestriche dürfen nicht am Anfang oder Ende eines Wortes stehen.",
+        "Der Vorname darf keine Bindestriche am Anfang oder Ende eines Wortes enthalten.",
     })
     .refine((name) => !/\-{2,}/.test(name), {
       error: "Der Vorname darf keine doppelten Bindestriche enthalten.",
     })
-    .max(50, { error: "Der Vorname darf maximal 50 Zeichen lang sein." }),
+    .max(50, { error: "Der Vorname darf maximal 50 Zeichen lang sein." })
+    .transform((val) => val.trim().replace(/\s{2,}/g, " ")),
 })
 
 export type PersogenFormValues = z.infer<typeof formSchema>
