@@ -10,6 +10,7 @@ import {
   formSchema,
   type PersogenFormValues,
 } from "@/components/persogen-form"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -23,9 +24,10 @@ import {
   getRandomAuthorityId,
   getRandomBirthDate,
   getRandomExpiryDate,
+  getRandomPrename,
+  getRandomSurname,
   getRandomVersionNumber,
 } from "@/lib/persogen"
-import { Button } from "@/components/ui/button"
 import { Dices } from "lucide-react"
 
 export function PersogenCard() {
@@ -38,6 +40,8 @@ export function PersogenCard() {
       birthdate: getRandomBirthDate(),
       expiryDate: getRandomExpiryDate(),
       versionNumber: getRandomVersionNumber(),
+      surname: getRandomSurname(),
+      prename: getRandomPrename(),
     },
   })
 
@@ -67,6 +71,8 @@ export function PersogenCard() {
                   birthdate: getRandomBirthDate(),
                   expiryDate: getRandomExpiryDate(),
                   versionNumber: getRandomVersionNumber(),
+                  surname: getRandomSurname(),
+                  prename: getRandomPrename(),
                 })
               }}
             >
