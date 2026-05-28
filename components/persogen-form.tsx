@@ -69,8 +69,7 @@ export const formSchema = z.object({
     .refine((name) => !/\-{2,}/.test(name), {
       error: "Der Nachname darf keine mehrfachen Bindestriche enthalten.",
     })
-    .max(50, { error: "Der Nachname darf maximal 50 Zeichen lang sein." })
-    .transform((val) => val.trim().replace(/\s{2,}/g, " ")),
+    .max(50, { error: "Der Nachname darf maximal 50 Zeichen lang sein." }),
   prename: z
     .string()
     .nonempty({ error: "Der Vorname ist erforderlich." })
@@ -85,8 +84,7 @@ export const formSchema = z.object({
     .refine((name) => !/\-{2,}/.test(name), {
       error: "Der Vorname darf keine doppelten Bindestriche enthalten.",
     })
-    .max(50, { error: "Der Vorname darf maximal 50 Zeichen lang sein." })
-    .transform((val) => val.trim().replace(/\s{2,}/g, " ")),
+    .max(50, { error: "Der Vorname darf maximal 50 Zeichen lang sein." }),
 })
 
 export type PersogenFormValues = z.infer<typeof formSchema>

@@ -59,6 +59,8 @@ function formatDateYYMMDD(date: Date): string {
 
 function normalizeName(name: string): string {
   return name
+    .trim()
+    .replace(/\s{2,}/g, " ")
     .toUpperCase()
     .replace(/Ä/g, "AE")
     .replace(/Ö/g, "OE")
