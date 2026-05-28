@@ -186,8 +186,7 @@ export function getRandomExpiryDate(): Date {
 }
 
 export function getRandomVersionNumber(): "2108" | "2405" {
-  const versionNumbers: ("2108" | "2405")[] = ["2108", "2405"]
-  return versionNumbers[Math.floor(Math.random() * versionNumbers.length)]
+  return "2405" // only return the latest version
 }
 
 export function getRandomSurname(): string {
