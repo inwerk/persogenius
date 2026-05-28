@@ -15,13 +15,17 @@ export function PersogenOutput() {
     values?.assignedNumber &&
     values?.birthdate &&
     values?.expiryDate &&
-    values?.versionNumber
+    values?.versionNumber &&
+    values?.surname &&
+    values?.prename
       ? getMachineReadableZone(
           values.authorityId,
           values.assignedNumber,
           values.birthdate,
           values.expiryDate,
-          values.versionNumber
+          values.versionNumber,
+          values.surname,
+          values.prename
         )
       : "Ungültige Eingabe. Bitte prüfe die Eingabefelder auf Fehler."
   const wrappedOutput = output.match(/.{1,30}/g)?.join("\n") ?? output

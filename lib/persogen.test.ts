@@ -23,12 +23,14 @@ describe("calculateCheckDigit", () => {
 })
 
 describe("getMachineReadableZone", () => {
-  it("should return the correct machine-readable zone for given inputs", () => {
+  it("should return the correct machine-readable zone for a given input", () => {
     const authorityId = "LZ63"
     const assignedNumber = "11T47"
     const birthDate = new Date("1983-08-12")
     const expiryDate = new Date("2034-05-01")
     const versionNumber = "2405"
+    const surname = "Mustermann"
+    const prename = "Erika"
 
     const expectedMRZ =
       "ID" + // documentCode
@@ -47,9 +49,9 @@ describe("getMachineReadableZone", () => {
       "2405" + // versionNumber
       "<<<<<<<" + // 7 angle brackets
       "3" + // checkDigit
-      "MUSTERMANN" + // hardcoded surname
+      "MUSTERMANN" + // surname
       "<<" + // 2 angle brackets
-      "ERIKA" + // hardcoded forename
+      "ERIKA" + // prename
       "<<<<<<<<<<<<<" // 13 angle brackets
 
     const mrz = getMachineReadableZone(
@@ -57,9 +59,90 @@ describe("getMachineReadableZone", () => {
       assignedNumber,
       birthDate,
       expiryDate,
-      versionNumber
+      versionNumber,
+      surname,
+      prename
     )
 
     expect(mrz).toBe(expectedMRZ)
   })
+
+  describe.each([
+    {
+      description: "umlauts in names",
+      surname: "Schröder",
+      prename: "Jürgen",
+      expectedSurname: "SCHROEDER",
+      expectedPrename: "JUERGEN",
+    },
+    {
+      description: "eszetts in names",
+      surname: "Groß",
+      prename: "Fritz",
+      expectedSurname: "GROSS",
+      expectedPrename: "FRITZ",
+    },
+    {
+      description: "multiple given names separated by spaces",
+      surname: "Schmidt",
+      prename: "Jason Malte Pascal",
+      expectedSurname: "SCHMIDT",
+      expectedPrename: "JASON<MALTE<PASCAL",
+    },
+    {
+      description: "compound surnames with hyphen",
+      surname: "Müller-Mustermann",
+      prename: "Anna",
+      expectedSurname: "MUELLERMUSTERMANN",
+      expectedPrename: "ANNA",
+    },
+    {
+      description: "surname with spaces",
+      surname: "von Neumann",
+      prename: "Johann",
+      expectedSurname: "VON<NEUMANN",
+      expectedPrename: "JOHANN",
+    },
+    {
+      description: "very long surname exceeds max length",
+      surname: "Abcdefghijklmnopqrstuvwxyzzzz",
+      prename: "Karl",
+      expectedSurname: "ABCDEFGHIJKLMNOPQRSTUVWXYZZZ",
+      expectedPrename: "",
+    },
+    {
+      description: "very long surname with spaces exceeds max length",
+      surname: "von Abcdefghijklmnopqrstuvwxyzzzz",
+      prename: "Karl",
+      expectedSurname: "ABCDEFGHIJKLMNOPQRSTUVWXYZZZ",
+      expectedPrename: "",
+    },
+  ])(
+    "should handle different naming conventions: $description",
+    ({ surname, prename, expectedSurname, expectedPrename }) => {
+      const authorityId = "LZ63"
+      const assignedNumber = "11T47"
+      const birthDate = new Date("1983-08-12")
+      const expiryDate = new Date("2034-05-01")
+      const versionNumber = "2405"
+
+      const mrz = getMachineReadableZone(
+        authorityId,
+        assignedNumber,
+        birthDate,
+        expiryDate,
+        versionNumber,
+        surname,
+        prename
+      )
+
+      // Extract the name section (last 30 characters)
+      // Format: "SURNAME<<PRENAME" padded to 30 chars with "<"
+      const nameSection = mrz.slice(-30)
+      const [surnameInMRZ, prenameInMRZ] = nameSection.split("<<")
+
+      expect(surnameInMRZ).toBe(expectedSurname)
+      expect(prenameInMRZ).toBe(expectedPrename)
+    }
+  )
 })

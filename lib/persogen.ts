@@ -21,7 +21,9 @@ function formatMachineReadableZone(
   expiryDateCheckDigit: string,
   nationality: "D",
   versionNumber: "2108" | "2405",
-  checkDigit: string
+  checkDigit: string,
+  surname: string,
+  prename: string
 ): string {
   return (
     documentCode +
@@ -40,10 +42,7 @@ function formatMachineReadableZone(
     versionNumber +
     "<".repeat(7) +
     checkDigit +
-    "MUSTERMANN" +
-    "<".repeat(2) +
-    "ERIKA" +
-    "<".repeat(13)
+    (surname + "<<" + prename).padEnd(30, "<")
   )
 }
 
@@ -58,12 +57,46 @@ function formatDateYYMMDD(date: Date): string {
   )
 }
 
+function normalizeName(name: string): string {
+  return name
+    .toUpperCase()
+    .replace(/Ä/g, "AE")
+    .replace(/Ö/g, "OE")
+    .replace(/Ü/g, "UE")
+    .replace(/ß/g, "SS")
+    .replace(/-/g, "")
+    .replace(/ /g, "<")
+}
+
+function truncateNameFromLeft(name: string, maxLen: number): string {
+  const parts = name.split("<")
+  let result = parts[parts.length - 1].substring(0, maxLen)
+  for (let i = parts.length - 2; i >= 0; i--) {
+    const candidate = `${parts[i]}<${result}`
+    if (candidate.length > maxLen) break
+    result = candidate
+  }
+  return result
+}
+
+function truncateNameFromRight(name: string, maxLen: number): string {
+  const parts = name.split("<")
+  let result = ""
+  for (let i = 0; i < parts.length; i++) {
+    const candidate = `${result}${result ? "<" : ""}${parts[i]}`
+    if (candidate.length <= maxLen) result = candidate
+  }
+  return result || name.substring(0, maxLen)
+}
+
 export function getMachineReadableZone(
   authorityId: string,
   assignedNumber: string,
   birthDate: Date,
   expiryDate: Date,
-  versionNumber: "2108" | "2405"
+  versionNumber: "2108" | "2405",
+  surname: string,
+  prename: string
 ): string {
   const documentCode = "ID"
   const issuingState = "D"
@@ -83,6 +116,11 @@ export function getMachineReadableZone(
       expiryDateCheckDigit +
       versionNumber
   )
+  const surnameStr = truncateNameFromLeft(normalizeName(surname), 30 - 2)
+  const prenameStr = truncateNameFromRight(
+    normalizeName(prename),
+    30 - surnameStr.length - 2
+  )
 
   return formatMachineReadableZone(
     documentCode,
@@ -95,7 +133,9 @@ export function getMachineReadableZone(
     expiryDateCheckDigit,
     nationality,
     versionNumber,
-    checkDigit
+    checkDigit,
+    surnameStr,
+    prenameStr
   )
 }
 
@@ -148,4 +188,36 @@ export function getRandomExpiryDate(): Date {
 export function getRandomVersionNumber(): "2108" | "2405" {
   const versionNumbers: ("2108" | "2405")[] = ["2108", "2405"]
   return versionNumbers[Math.floor(Math.random() * versionNumbers.length)]
+}
+
+export function getRandomSurname(): string {
+  const surnames: string[] = [
+    "Becker",
+    "Fischer",
+    "Hoffmann",
+    "Keller",
+    "Klein",
+    "Meyer",
+    "Schäfer",
+    "Schmidt",
+    "Wagner",
+    "Weber",
+  ]
+  return surnames[Math.floor(Math.random() * surnames.length)]
+}
+
+export function getRandomPrename(): string {
+  const prenames: string[] = [
+    "Alexander",
+    "Anna",
+    "Charlotte",
+    "Elisabeth",
+    "Friedrich",
+    "Johanna",
+    "Karl",
+    "Katharina",
+    "Ludwig",
+    "Siegfried",
+  ]
+  return prenames[Math.floor(Math.random() * prenames.length)]
 }

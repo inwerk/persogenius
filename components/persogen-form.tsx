@@ -55,6 +55,50 @@ export const formSchema = z.object({
   versionNumber: z.enum(["2108", "2405"], {
     error: "Die Versionsnummer ist erforderlich.",
   }),
+  surname: z
+    .string()
+    .nonempty({ error: "Der Nachname ist erforderlich." })
+    .regex(/^[A-ZÄÖÜßa-zäöü\s\-]+$/i, {
+      error:
+        "Der Nachname darf nur aus Großbuchstaben, Kleinbuchstaben, Umlauten, Eszetts, Leerzeichen oder Bindestrichen bestehen.",
+    })
+    .refine((name) => !/^\s|\s$/.test(name), {
+      error:
+        "Der Vorname darf keine führenden oder endenden Leerzeichen enthalten.",
+    })
+    .refine((name) => !/\s{2,}/.test(name), {
+      error: "Der Vorname darf keine doppelten Leerzeichen enthalten.",
+    })
+    .refine((name) => !name.split(/\s+/).some((word) => /^\-|\-$/.test(word)), {
+      error:
+        "Bindestriche dürfen nicht am Anfang oder Ende eines Wortes stehen.",
+    })
+    .refine((name) => !/\-{2,}/.test(name), {
+      error: "Der Vorname darf keine mehrfachen Bindestriche enthalten.",
+    })
+    .max(50, { error: "Der Nachname darf maximal 50 Zeichen lang sein." }),
+  prename: z
+    .string()
+    .nonempty({ error: "Der Vorname ist erforderlich." })
+    .regex(/^[A-ZÄÖÜßa-zäöü\s\-]+$/i, {
+      error:
+        "Der Vorname darf nur aus Großbuchstaben, Kleinbuchstaben, Umlauten, Eszetts, Leerzeichen oder Bindestrichen bestehen.",
+    })
+    .refine((name) => !/^\s|\s$/.test(name), {
+      error:
+        "Der Vorname darf keine führenden oder endenden Leerzeichen enthalten.",
+    })
+    .refine((name) => !/\s{2,}/.test(name), {
+      error: "Der Vorname darf keine doppelten Leerzeichen enthalten.",
+    })
+    .refine((name) => !name.split(/\s+/).some((word) => /^\-|\-$/.test(word)), {
+      error:
+        "Bindestriche dürfen nicht am Anfang oder Ende eines Wortes stehen.",
+    })
+    .refine((name) => !/\-{2,}/.test(name), {
+      error: "Der Vorname darf keine doppelten Bindestriche enthalten.",
+    })
+    .max(50, { error: "Der Vorname darf maximal 50 Zeichen lang sein." }),
 })
 
 export type PersogenFormValues = z.infer<typeof formSchema>
@@ -65,41 +109,165 @@ export function PersogenForm() {
   return (
     <form id="form-rhf-persogen">
       <FieldGroup>
+        <div className="flex gap-4">
+          <div className="flex-1">
+            <Controller
+              name="authorityId"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="form-rhf-persogen-authority-id">
+                    Behördenkennzahl
+                  </FieldLabel>
+                  <Input
+                    {...field}
+                    id="form-rhf-persogen-authority-id"
+                    aria-invalid={fieldState.invalid}
+                    type="text"
+                    autoComplete="off"
+                    maxLength={4}
+                  />
+                </Field>
+              )}
+            />
+          </div>
+          <div className="flex-1">
+            <Controller
+              name="assignedNumber"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="form-rhf-persogen-assigned-number">
+                    Nummer
+                  </FieldLabel>
+                  <Input
+                    {...field}
+                    id="form-rhf-persogen-assigned-number"
+                    aria-invalid={fieldState.invalid}
+                    type="text"
+                    autoComplete="off"
+                    maxLength={5}
+                  />
+                </Field>
+              )}
+            />
+          </div>
+        </div>
+        {form.formState.errors.authorityId && (
+          <FieldError
+            errors={[form.formState.errors.authorityId]}
+            className="-mt-3"
+          />
+        )}
+        {form.formState.errors.assignedNumber && (
+          <FieldError
+            errors={[form.formState.errors.assignedNumber]}
+            className="-mt-3"
+          />
+        )}
+        <div className="flex gap-4">
+          <div className="flex-1">
+            <Controller
+              name="expiryDate"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="form-rhf-persogen-expiry-date">
+                    Ablaufdatum
+                  </FieldLabel>
+                  <DatePicker
+                    id="form-rhf-persogen-expiry-date"
+                    name={field.name}
+                    value={field.value}
+                    onChangeAction={field.onChange}
+                    onBlurAction={field.onBlur}
+                    startMonth={new Date(2024, 7)}
+                    endMonth={new Date(2099, 11)}
+                    ariaInvalid={fieldState.invalid}
+                  />
+                </Field>
+              )}
+            />
+          </div>
+          <div className="flex-1">
+            <Controller
+              name="versionNumber"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="form-rhf-persogen-version-number">
+                    Versionsnummer
+                  </FieldLabel>
+                  <Select
+                    value={field.value}
+                    onValueChange={field.onChange}
+                    name={field.name}
+                  >
+                    <SelectTrigger
+                      id="form-rhf-persogen-version-number"
+                      aria-invalid={fieldState.invalid}
+                      onBlur={field.onBlur}
+                      className="w-full"
+                    >
+                      <SelectValue placeholder="Version auswählen" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="2108">2108</SelectItem>
+                      <SelectItem value="2405">2405</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </Field>
+              )}
+            />
+          </div>
+        </div>
+        {form.formState.errors.expiryDate && (
+          <FieldError
+            errors={[form.formState.errors.expiryDate]}
+            className="-mt-3"
+          />
+        )}
+        {form.formState.errors.versionNumber && (
+          <FieldError
+            errors={[form.formState.errors.versionNumber]}
+            className="-mt-3"
+          />
+        )}
         <Controller
-          name="authorityId"
+          name="prename"
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="form-rhf-persogen-authority-id">
-                Behördenkennzahl
+              <FieldLabel htmlFor="form-rhf-persogen-prename">
+                Vorname
               </FieldLabel>
               <Input
                 {...field}
-                id="form-rhf-persogen-authority-id"
+                id="form-rhf-persogen-prename"
                 aria-invalid={fieldState.invalid}
                 type="text"
-                autoComplete="off"
-                maxLength={4}
+                autoComplete="given-name"
+                maxLength={50}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
         <Controller
-          name="assignedNumber"
+          name="surname"
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="form-rhf-persogen-assigned-number">
-                Nummer
+              <FieldLabel htmlFor="form-rhf-persogen-surname">
+                Nachname
               </FieldLabel>
               <Input
                 {...field}
-                id="form-rhf-persogen-assigned-number"
+                id="form-rhf-persogen-surname"
                 aria-invalid={fieldState.invalid}
                 type="text"
-                autoComplete="off"
-                maxLength={5}
+                autoComplete="family-name"
+                maxLength={50}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -123,58 +291,6 @@ export function PersogenForm() {
                 endMonth={new Date(new Date().getFullYear(), 11)}
                 ariaInvalid={fieldState.invalid}
               />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-            </Field>
-          )}
-        />
-        <Controller
-          name="expiryDate"
-          control={form.control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="form-rhf-persogen-expiry-date">
-                Ablaufdatum
-              </FieldLabel>
-              <DatePicker
-                id="form-rhf-persogen-expiry-date"
-                name={field.name}
-                value={field.value}
-                onChangeAction={field.onChange}
-                onBlurAction={field.onBlur}
-                startMonth={new Date(2024, 7)}
-                endMonth={new Date(2099, 11)}
-                ariaInvalid={fieldState.invalid}
-              />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-            </Field>
-          )}
-        />
-        <Controller
-          name="versionNumber"
-          control={form.control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="form-rhf-persogen-version-number">
-                Versionsnummer
-              </FieldLabel>
-              <Select
-                value={field.value}
-                onValueChange={field.onChange}
-                name={field.name}
-              >
-                <SelectTrigger
-                  id="form-rhf-persogen-version-number"
-                  aria-invalid={fieldState.invalid}
-                  onBlur={field.onBlur}
-                  className="w-full"
-                >
-                  <SelectValue placeholder="Version auswählen" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="2108">2108</SelectItem>
-                  <SelectItem value="2405">2405</SelectItem>
-                </SelectContent>
-              </Select>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
