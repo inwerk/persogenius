@@ -50,7 +50,7 @@
     "jest": "^30.4.2",
     "postcss": "^8",
     "prettier": "^3.9.4",
-    "prettier-plugin-tailwindcss": "^0.8.0",
+    "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "^4.3.1",
     "typescript": "^6.0.3",
     "wrangler": "^4.103.0"
