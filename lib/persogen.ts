@@ -1,3 +1,5 @@
+import { authorityMapping } from "@/lib/data"
+
 export function calculateCheckDigit(str: string): string {
   const multipliers = [7, 3, 1]
   let sum = 0
@@ -142,19 +144,8 @@ export function getMachineReadableZone(
 }
 
 export function getRandomAuthorityId(): string {
-  const authorityIds: string[] = [
-    "L01X", // Köln
-    "L2CJ", // Emden
-    "L353", // Sulzbach/Saar
-    "L6Z8", // Oberhausen
-    "L72G", // Schwalmtal
-    "L73Y", // Bonn
-    "L79V", // Sankt Augustin
-    "L7TH", // Iserlohn
-    "L88N", // Heidenheim
-    "L933", // Freiburg im Breisgau
-  ]
-  return authorityIds[Math.floor(Math.random() * authorityIds.length)]
+  const ids = Object.keys(authorityMapping)
+  return ids[Math.floor(Math.random() * ids.length)]
 }
 
 export function getRandomAssignedNumber(): string {
