@@ -31,7 +31,7 @@
     "react": "^19.3.1",
     "react-day-picker": "^10.0.2",
     "react-dom": "^19.3.0",
-    "react-hook-form": "^7.87.0",
+    "react-hook-form": "^7.92.0",
     "shadcn": "^4.22.1",
     "simple-icons": "^16.36.0",
     "tailwind-merge": "^3.6.0",
